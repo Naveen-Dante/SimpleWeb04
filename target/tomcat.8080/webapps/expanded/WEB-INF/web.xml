@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+	<display-name>SimpleWeb04</display-name>
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+	<!-- <context-param>
+		<param-name>javax.servlet.jsp.jstl.fmt.fallbackLocale</param-name>
+		<param-value>en_US</param-value>
+	</context-param> -->
+	<servlet>
+		<description></description>
+		<display-name>SimpleWebAppController</display-name>
+		<servlet-name>SimpleWebAppController</servlet-name>
+		<servlet-class>com.epam.simpleweb04.controller.SimpleWebAppController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SimpleWebAppController</servlet-name>
+		<url-pattern>/user</url-pattern>
+		<url-pattern>/new</url-pattern>
+		<url-pattern>/admin</url-pattern>
+		<url-pattern>/logout</url-pattern>
+	</servlet-mapping>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error.html</location>
+	</error-page>
+	<error-page>
+		<error-code>403</error-code>
+		<location>/error.html</location>
+	</error-page>
+	<error-page>
+		<error-code>401</error-code>
+		<location>/error.html</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error.html</location>
+	</error-page>
+</web-app>
