@@ -14,12 +14,12 @@ import org.apache.log4j.Logger;
 public class ConnectionPool {
 
 	private static final String BASENAME = "Config";
-	private static final String DB_DRIVER_CLASS = "DB_DRIVER_CLASS";
+	/*private static final String DB_DRIVER_CLASS = "DB_DRIVER_CLASS";
 	private static final String DB_URL = "DB_URL";
 	private static final String DB_USERNAME = "DB_USERNAME";
-	private static final String DB_PASSWORD = "DB_PASSWORD";
+	private static final String DB_PASSWORD = "DB_PASSWORD";*/
 	private static final Logger LOGGER = Logger.getLogger(ConnectionPool.class);
-	private static final ResourceBundle resource = ResourceBundle.getBundle(BASENAME, Locale.US);
+	/*private static final ResourceBundle resource = ResourceBundle.getBundle(BASENAME, Locale.US);*/
 	
 	private static Connection con;
 	private static volatile ConnectionPool pool;
@@ -64,14 +64,14 @@ public class ConnectionPool {
 		   String password = jdbUri.getUserInfo().split(":")[1];
 		   String port = String.valueOf(jdbUri.getPort());
 		   String jdbUrl = "jdbc:mysql://" + jdbUri.getHost() + ":" + port + jdbUri.getPath();
-		   Class.forName(resource.getString(DB_DRIVER_CLASS));
+		   Class.forName("com.mysql.jdbc.Driver");
 		   con = DriverManager.getConnection(jdbUrl, username, password);
 		  } catch (URISyntaxException e) {
-			  e.printStackTrace();
+			  LOGGER.error("Can't connect to data base.",e);
 		  } catch (SQLException e) {
-			  e.printStackTrace();
+			  LOGGER.error("Can't connect to data base.",e);
 		  } catch (ClassNotFoundException e) {
-			  e.printStackTrace();
+			  LOGGER.error("Can't connect to data base.",e);
 		  }
 
 		  return con;
