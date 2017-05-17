@@ -2,10 +2,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="language"
-	value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" 
-	scope="session"
-	/>
-
+	value="${not empty param.language ? param.language : not empty language ? language : 'en_US'}"
+	scope="session" />
+ 	
 <fmt:setLocale value="${language }" scope="session" />
 
 <fmt:setBundle basename="com.epam.bundle.labels" var="bundle"
@@ -38,13 +37,14 @@
 			class="glyphicon glyphicon-user"></span>
 		</a>
 	</div>
-	<footer>
+	<%-- <footer>
 		<form>
 			<select id="language" name="language" onchange="submit()">
 				<option value="en_US" ${language == 'en_US' ? 'selected' : ''}>English</option>
 				<option value="es_ES" ${language == 'es_ES' ? 'selected' : ''}>Español</option>
 			</select>
 		</form>
-	</footer>
+	</footer> --%>
+	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>

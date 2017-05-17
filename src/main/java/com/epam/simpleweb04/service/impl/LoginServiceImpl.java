@@ -31,7 +31,7 @@ public class LoginServiceImpl implements LoginService {
 		try {
 			user = dao.getUser(userName, password);
 		} catch (DAOException e) {
-			throw new ServiceException("Unable to get the UserData.");
+			throw new ServiceException("Unable to get the UserData.",e);
 		}
 		return user;
 	}

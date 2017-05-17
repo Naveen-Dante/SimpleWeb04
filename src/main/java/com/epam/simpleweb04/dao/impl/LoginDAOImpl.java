@@ -15,14 +15,14 @@ public class LoginDAOImpl implements LoginDAO {
 
 	private static final String PASSWORD = "password";
 	private static final String PHONENUMBER = "phonenumber";
-	private static final String IS_ADMIN = "is_admin";
+	private static final String IS_ADMIN = "isadmin";
 	private static final String EMAIL = "email";
 	private static final String USERNAME = "username";
 	private static final String LASTNAME = "lastname";
 	private static final String FIRSTNAME = "firstname";
 	private static volatile LoginDAOImpl instance;
 	private static final ConnectionPool POOL = ConnectionPool.getPool();
-	private static final String SELECT_QUERY = "SELECT * FROM userdb.user_login WHERE `username`= ?;";
+	private static final String SELECT_QUERY = "SELECT * FROM user WHERE `username`= ?;";
 
 	private LoginDAOImpl() {
 
@@ -41,6 +41,13 @@ public class LoginDAOImpl implements LoginDAO {
 	public User getUser(String userName, String password) throws DAOException {
 		User user = null;
 		Connection connection = POOL.getConnection();
+		System.out.println(connection);
+		try {
+			System.out.println(connection.isClosed());
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		PreparedStatement selectQuery = null;
 		try{
 			selectQuery = connection.prepareStatement(SELECT_QUERY);
@@ -58,7 +65,7 @@ public class LoginDAOImpl implements LoginDAO {
 				}
 			}
 		}catch (SQLException e) {
-			throw new DAOException("Unable to find the user..");
+			throw new DAOException("Unable to find the user..",e);
 		}
 		return user;
 	}

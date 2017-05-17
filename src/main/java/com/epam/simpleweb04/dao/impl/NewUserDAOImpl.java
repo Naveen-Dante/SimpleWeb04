@@ -16,11 +16,11 @@ public class NewUserDAOImpl implements NewUserDAO {
 	private static final String USER = "user";
 	private static volatile NewUserDAOImpl instance;
 	private static final ConnectionPool POOL = ConnectionPool.getPool();
-	private static final String INSERT_QUERY = "INSERT INTO `userdb`.`user_login` "
-			+ "(`username`, `firstname`, `lastname`, `email`, `password`, `phonenumber`, `is_admin`) "
+	private static final String INSERT_QUERY = "INSERT INTO `user` "
+			+ "(`username`, `firstname`, `lastname`, `email`, `password`, `phonenumber`, `isadmin`) "
 			+ "VALUES ( ?, ?, ?, ?, ?, ?, ?);";
 	private static final String IS_USER_NAME_QUERY = "SELECT EXISTS ("
-			+ "SELECT 1 FROM `user_login` WHERE `username` = ?)" + " AS user ";
+			+ "SELECT 1 FROM `user` WHERE `username` = ?)" + " AS user ";
 
 	private NewUserDAOImpl() {
 
@@ -42,8 +42,8 @@ public class NewUserDAOImpl implements NewUserDAO {
 		Connection connection = POOL.getConnection();
 		PreparedStatement insertQuery = null;
 		try {
-			insertQuery = connection.prepareStatement(INSERT_QUERY);
 			if (isUser(user, connection)) {
+				insertQuery = connection.prepareStatement(INSERT_QUERY);
 				insertQuery.setString(1, user.getUserName());
 				insertQuery.setString(2, user.getFirstName());
 				insertQuery.setString(3, user.getLastName());
@@ -51,7 +51,9 @@ public class NewUserDAOImpl implements NewUserDAO {
 				insertQuery.setString(5, password);
 				insertQuery.setString(6, user.getPhoneNumber().toString());
 				insertQuery.setInt(7, user.isAdmin() == true ? 1 : 0);
-				success = (insertQuery.executeUpdate() > 0 ? true : false);
+				int rows = insertQuery.executeUpdate();
+				success = (rows > 0 ? true : false);
+				
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Unable to Create New User", e);
@@ -73,8 +75,7 @@ public class NewUserDAOImpl implements NewUserDAO {
 				isAvailable = false;
 			}
 		}
-		Utility.closeStatement(validateExistanceQuery);
-		Utility.closeConnection(connection);
+		validateExistanceQuery.close();
 		return isAvailable;
 	}
 

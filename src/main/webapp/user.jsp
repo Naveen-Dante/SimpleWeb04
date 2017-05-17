@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="language"
-	value="${language}" />
+	value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" />
 <fmt:setLocale value="${language }" scope="session" />
 <fmt:setBundle basename="com.epam.bundle.labels" var="bundle"
 	scope="session" />
@@ -37,8 +37,7 @@
 			</div>
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="Last Name"><fmt:message
-						key="pass" bundle="${bundle }"></fmt:message>:
-				</label>
+						key="pass" bundle="${bundle }"></fmt:message>: </label>
 				<div class="col-sm-10">
 					<input type="password" class="form-control" name="password"
 						placeholder="Enter Password" required pattern="[a-zA-Z]{4,}"
@@ -55,8 +54,9 @@
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
 					<button type="submit" name="button" value="login"
-						class="btn btn-default"><fmt:message
-						key="login" bundle="${bundle }"></fmt:message></button>
+						class="btn btn-default">
+						<fmt:message key="login" bundle="${bundle }"></fmt:message>
+					</button>
 				</div>
 			</div>
 		</form>

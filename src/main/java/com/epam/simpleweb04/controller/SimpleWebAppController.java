@@ -13,6 +13,8 @@ import com.epam.simpleweb04.utility.Utility;
  * Servlet implementation class SimpleWebAppController
  */
 public class SimpleWebAppController extends HttpServlet {
+	private static final String BOOK_COMMAND = "book";
+
 	private static final long serialVersionUID = 1L;
 	
 	private static final CommandProvider PROVIDER = new CommandProvider();
@@ -45,7 +47,11 @@ public class SimpleWebAppController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String operation = request.getParameter("button");
-		PROVIDER.getCommand(operation).execute(request, response);
+		
+		if(operation.contains(BOOK_COMMAND))
+			PROVIDER.getCommand(BOOK_COMMAND).execute(request, response);
+		else
+			PROVIDER.getCommand(operation).execute(request, response);
 	}
 
 }

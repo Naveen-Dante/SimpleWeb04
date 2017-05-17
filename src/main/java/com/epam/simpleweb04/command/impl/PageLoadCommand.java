@@ -24,7 +24,7 @@ public class PageLoadCommand implements Command {
 				request.getRequestDispatcher("user.jsp").forward(request, response);
 			} else if (data[data.length - 1].equalsIgnoreCase("new")) {
 				request.getRequestDispatcher("new.jsp").forward(request, response);
-			}
+			} 
 		} else {
 			User user = (User) session.getAttribute("user");
 			System.out.println("In loggedIn Loop");

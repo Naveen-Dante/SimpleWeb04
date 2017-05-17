@@ -14,7 +14,10 @@
 <title>Admin Page</title>
 </head>
 <body>
-	<p><fmt:message key="welcome" bundle="${bundle }"></fmt:message> Admin.</p>
+	<p>
+		<fmt:message key="welcome" bundle="${bundle }"></fmt:message>
+		Admin.
+	</p>
 	<form action="logout" method="post">
 		<button class="btn-lg btn-primary" type="submit" name="button"
 			value="logout">LogOut</button>
